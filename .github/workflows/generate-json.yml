@@ -6,12 +6,21 @@ on:
       user_id:
         description: 'User ID'
         required: true
-      theme:
-        description: 'Preferred Theme'
-        default: 'light'
-      language:
-        description: 'Language'
-        default: 'en'
+      tenant:
+        description: 'CIAM Tenant name (e.g., sunnylinkth)'
+        required: true
+      client_id:
+        description: 'Azure AD Client ID'
+        required: true
+      cache_file:
+        description: 'MSAL Cache File Name'
+        default: 'msal_cache.txt'
+      cache_dir:
+        description: 'MSAL Cache Directory'
+        default: 'C:/temp'
+      scopes:
+        description: 'API Scopes'
+        default: 'openid offline_access'
 
 jobs:
   generate:
@@ -23,12 +32,19 @@ jobs:
       - name: Generate JSON File
         run: |
           mkdir -p data
-          echo '{
-            "UserId": "${{ github.event.inputs.user_id }}",
-            "PreferredTheme": "${{ github.event.inputs.theme }}",
-            "Language": "${{ github.event.inputs.language }}",
-            "AllowedModules": ["dashboard"]
-          }' > data/${{ github.event.inputs.user_id }}.json
+          cat <<EOF > data/${{ github.event.inputs.user_id }}.json
+          {
+            "AzureAd": {
+              "Authority": "https://${{ github.event.inputs.tenant }}.ciamlogin.com/",
+              "ClientId": "${{ github.event.inputs.client_id }}",
+              "CacheFileName": "${{ github.event.inputs.cache_file }}",
+              "CacheDir": "${{ github.event.inputs.cache_dir }}"
+            },
+            "DownstreamApi": {
+              "Scopes": "${{ github.event.inputs.scopes }}"
+            }
+          }
+          EOF
 
       - name: Commit and Push
         run: |

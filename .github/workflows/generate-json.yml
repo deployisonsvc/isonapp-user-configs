@@ -1,0 +1,39 @@
+name: Generate User Config
+
+on:
+  workflow_dispatch:
+    inputs:
+      user_id:
+        description: 'User ID'
+        required: true
+      theme:
+        description: 'Preferred Theme'
+        default: 'light'
+      language:
+        description: 'Language'
+        default: 'en'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Generate JSON File
+        run: |
+          mkdir -p data
+          echo '{
+            "UserId": "${{ github.event.inputs.user_id }}",
+            "PreferredTheme": "${{ github.event.inputs.theme }}",
+            "Language": "${{ github.event.inputs.language }}",
+            "AllowedModules": ["dashboard"]
+          }' > data/${{ github.event.inputs.user_id }}.json
+
+      - name: Commit and Push
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "actions@github.com"
+          git add data/${{ github.event.inputs.user_id }}.json
+          git commit -m "Add config for ${{ github.event.inputs.user_id }}"
+          git push

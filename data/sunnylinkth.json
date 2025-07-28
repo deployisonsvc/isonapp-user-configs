@@ -6,6 +6,6 @@
     "CacheDir": "C:/temp"
   },
   "DownstreamApi": {
-    "Scopes": "openid offline_access"
+    "Scopes": "openid offline_access User.Read Sites.ReadWrite.All"
   }
 }

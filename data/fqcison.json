@@ -1,0 +1,11 @@
+{
+  "AzureAd": {
+    "Authority": "https://fqcison.ciamlogin.com/",
+    "ClientId": "na",
+    "CacheFileName": "msal_cache.txt",
+    "CacheDir": "C:/temp"
+  },
+  "DownstreamApi": {
+    "Scopes": "openid offline_access"
+  }
+}

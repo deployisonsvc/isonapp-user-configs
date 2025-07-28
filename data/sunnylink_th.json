@@ -1,6 +1,6 @@
 {
   "AzureAd": {
-    "Authority": "https://sunnylinkth.ciamlogin.com/",
+    "Authority": "https://sunnylink_th.ciamlogin.com/",
     "ClientId": "93c2db84-0e17-401d-9b27-d94ea3207772",
     "CacheFileName": "msal_cache.txt",
     "CacheDir": "C:/temp"

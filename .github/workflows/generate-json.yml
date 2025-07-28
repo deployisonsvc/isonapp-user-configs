@@ -3,14 +3,14 @@ name: Generate User Config
 on:
   workflow_dispatch:
     inputs:
-      user_id:
-        description: 'User ID'
-        required: true
       tenant:
-        description: 'CIAM Tenant name (e.g., sunnylinkth)'
+        description: 'CIAM Tenant name (e.g., xyz123)'
         required: true
       client_id:
-        description: 'Azure AD Client ID'
+        description: 'Azure AD Application (client) ID'
+        required: true
+      tenant_id:
+        description: 'Azure Directory (tenant) ID'
         required: true
       cache_file:
         description: 'MSAL Cache File Name'
@@ -20,7 +20,7 @@ on:
         default: 'C:/temp'
       scopes:
         description: 'API Scopes'
-        default: 'openid offline_access'
+        default: 'openid offline_access User.Read Sites.ReadWrite.All'
 
 jobs:
   generate:
@@ -33,11 +33,12 @@ jobs:
       - name: Generate JSON File
         run: |
           mkdir -p data
-          cat <<EOF > data/${{ github.event.inputs.user_id }}.json
+          cat <<EOF > data/${{ github.event.inputs.tenant }}.json
           {
             "AzureAd": {
               "Authority": "https://${{ github.event.inputs.tenant }}.ciamlogin.com/",
               "ClientId": "${{ github.event.inputs.client_id }}",
+              "TenantId": "${{ github.event.inputs.tenant_id }}",
               "CacheFileName": "${{ github.event.inputs.cache_file }}",
               "CacheDir": "${{ github.event.inputs.cache_dir }}"
             },

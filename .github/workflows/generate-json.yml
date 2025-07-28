@@ -54,6 +54,6 @@ jobs:
         run: |
           git config user.name "GitHub Action"
           git config user.email "actions@github.com"
-          git add data/${{ github.event.inputs.user_id }}.json
-          git commit -m "Add config for ${{ github.event.inputs.user_id }}" || echo "No changes to commit"
+          git add data/${{ github.event.inputs.tenant }}.json
+          git commit -m "Add config for ${{ github.event.inputs.tenant }}" || echo "No changes to commit"
           git push https://${PAT_TOKEN}@github.com/${{ github.repository }} HEAD:main

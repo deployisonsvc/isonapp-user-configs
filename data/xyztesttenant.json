@@ -1,0 +1,12 @@
+{
+  "AzureAd": {
+    "Authority": "https://xyztesttenant.ciamlogin.com/",
+    "ClientId": "93c2db84-0e17-401d-9b27-d94ea3207772",
+    "TenantId": "3c3256ee-f1dc-4c4c-9969-2c0b0deaed31",
+    "CacheFileName": "msal_cache.txt",
+    "CacheDir": "C:/temp"
+  },
+  "DownstreamApi": {
+    "Scopes": "openid offline_access User.Read Sites.ReadWrite.All"
+  }
+}
